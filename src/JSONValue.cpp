@@ -380,6 +380,24 @@ JSONValue::JSONValue(int m_integer_value)
 	number_value = (double) m_integer_value;
 }
 
+JSONValue::JSONValue(int64_t m_int64_value)
+{
+	type = JSONType_Int64;
+	int64_value = (int64_t)m_int64_value;
+}
+
+JSONValue::JSONValue(uint64_t m_uint64_value)
+{
+	type = JSONType_Uint64;
+	uint64_value = (uint64_t)m_uint64_value;
+}
+
+JSONValue::JSONValue(unsigned int m_integer_value)
+{
+	type = JSONType_Number;
+	number_value = (double)m_integer_value;
+}
+
 /**
  * Basic constructor for creating a JSON Value of type Array
  *
@@ -429,6 +447,14 @@ JSONValue::JSONValue(const JSONValue &m_source)
 
 		case JSONType_Number:
 			number_value = m_source.number_value;
+			break;
+
+		case JSONType_Int64:
+			int64_value = m_source.int64_value;
+			break;
+
+		case JSONType_Uint64:
+			uint64_value = m_source.uint64_value;
 			break;
 
 		case JSONType_Array:
@@ -538,7 +564,17 @@ bool JSONValue::IsNumber() const
 	return type == JSONType_Number;
 }
 
-/**
+ bool JSONValue::IsInt64() const
+ {
+	 return type == JSONType_Int64;
+ }
+
+ bool JSONValue::IsUint64() const
+ {
+	 return type == JSONType_Uint64;
+ }
+
+ /**
  * Checks if the value is an Array
  *
  * @access public
@@ -599,6 +635,16 @@ bool JSONValue::AsBool() const
 double JSONValue::AsNumber() const
 {
 	return number_value;
+}
+
+int64_t JSONValue::AsInt64() const
+{
+	return int64_value;
+}
+
+uint64_t JSONValue::AsUint64() const
+{
+	return uint64_value;
 }
 
 /**
@@ -815,6 +861,24 @@ std::wstring JSONValue::StringifyImpl(size_t const indentDepth) const
 				ss << number_value;
 				ret_string = ss.str();
 			}
+			break;
+		}
+
+		case JSONType_Int64:
+		{
+			std::wstringstream ss;
+			ss.precision(32);
+			ss << int64_value;
+			ret_string = ss.str();
+			break;
+		}
+
+		case JSONType_Uint64:
+		{
+			std::wstringstream ss;
+			ss.precision(32);
+			ss << uint64_value;
+			ret_string = ss.str();
 			break;
 		}
 

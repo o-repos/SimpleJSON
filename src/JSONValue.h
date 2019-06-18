@@ -27,12 +27,22 @@
 
 #include <vector>
 #include <string>
+#include <stdint.h>
 
 #include "JSON.h"
 
 class JSON;
 
-enum JSONType { JSONType_Null, JSONType_String, JSONType_Bool, JSONType_Number, JSONType_Array, JSONType_Object };
+enum JSONType {
+	JSONType_Null,
+	JSONType_String,
+	JSONType_Bool,
+	JSONType_Number,
+	JSONType_Int64,
+	JSONType_Uint64,
+	JSONType_Array,
+	JSONType_Object
+};
 
 class JSONValue
 {
@@ -45,6 +55,9 @@ class JSONValue
 		JSONValue(bool m_bool_value);
 		JSONValue(double m_number_value);
 		JSONValue(int m_integer_value);
+		JSONValue(unsigned int m_integer_value);
+		JSONValue(int64_t m_int64_value);
+		JSONValue(uint64_t m_uint64_value);
 		JSONValue(const JSONArray &m_array_value);
 		JSONValue(const JSONObject &m_object_value);
 		JSONValue(const JSONValue &m_source);
@@ -54,12 +67,16 @@ class JSONValue
 		bool IsString() const;
 		bool IsBool() const;
 		bool IsNumber() const;
+		bool IsInt64() const;
+		bool IsUint64() const;
 		bool IsArray() const;
 		bool IsObject() const;
 
 		const std::wstring &AsString() const;
 		bool AsBool() const;
 		double AsNumber() const;
+		int64_t AsInt64() const;
+		uint64_t AsUint64() const;
 		const JSONArray &AsArray() const;
 		const JSONObject &AsObject() const;
 
@@ -85,6 +102,8 @@ class JSONValue
 		{
 			bool bool_value;
 			double number_value;
+			int64_t int64_value;
+			uint64_t uint64_value;
 			std::wstring *string_value;
 			JSONArray *array_value;
 			JSONObject *object_value;

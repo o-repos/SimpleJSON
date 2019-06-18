@@ -123,6 +123,7 @@ void example2()
 
 	// Adding a string
 	root[L"test_string"] = new JSONValue(L"hello world");
+	root[L"uint64"] = new JSONValue(579221254078012839);
 
 	// Create a random integer array
 	JSONArray array;
